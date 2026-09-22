@@ -1,0 +1,15 @@
+{
+  "name": "dkc-oauth-portal",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd worker && wrangler dev",
+    "deploy": "cd worker && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.5.0"
+  }
+}

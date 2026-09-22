@@ -1,0 +1,20 @@
+name = "dkc-oauth-portal"
+main = "index.js"
+compatibility_date = "2024-09-25"
+
+[vars]
+OAUTH_BASE_URI = "https://oauth.dhammakaya.network"
+OAUTH_CLIENT_ID = "34"
+OAUTH_REDIRECT_URI = "http://localhost:8787/auth/callback"
+APP_URL = "http://localhost:8787"
+MSG_APP_NAME = "DKC_PORTAL"
+
+# Secrets (set via `wrangler secret put`):
+# OAUTH_CLIENT_SECRET
+# SESSION_SECRET
+
+[site]
+bucket = "../public"
+
+[dev]
+port = 8787
