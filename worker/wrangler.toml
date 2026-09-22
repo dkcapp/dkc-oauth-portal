@@ -5,8 +5,8 @@ compatibility_date = "2024-09-25"
 [vars]
 OAUTH_BASE_URI = "https://oauth.dhammakaya.network"
 OAUTH_CLIENT_ID = "34"
-OAUTH_REDIRECT_URI = "http://localhost:8787/auth/callback"
-APP_URL = "http://localhost:8787"
+OAUTH_REDIRECT_URI = "https://dkc-oauth-portal.dkcapp.workers.dev/auth/callback"
+APP_URL = "https://dkc-oauth-portal.dkcapp.workers.dev"
 MSG_APP_NAME = "DKC_PORTAL"
 
 # Secrets (set via `wrangler secret put`):
