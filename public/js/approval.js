@@ -48,17 +48,19 @@ const Approval = {
 
         try {
           const result = await this.submitRequest({ ExternalRefID, ApproveType, MsgSubject, MsgForHead });
-          if (result && !result.error) {
+          if (result && result.success && result.data) {
             window.App?.showToast('ส่งคำขออนุมัติสำเร็จ', 'success');
             const resultCard = document.getElementById('approvalResult');
             const resultContent = document.getElementById('approvalResultContent');
             if (resultCard && resultContent) {
               resultCard.style.display = 'block';
               resultContent.innerHTML = `
-                <div><strong>ผู้อนุมัติ:</strong> ${result.ApproverName || '-'}</div>
-                <div><strong>ตำแหน่ง:</strong> ${result.ApproverPosition || '-'}</div>
-                <div><strong>หน่วยงาน:</strong> ${result.ApproverOrg || '-'}</div>
-                <div><strong>อีเมล:</strong> ${result.ApproverEmail || '-'}</div>
+                <div><strong>ผู้อนุมัติ (AD):</strong> ${result.data.ADApprover || '-'}</div>
+                <div><strong>ชื่อผู้อนุมัติ:</strong> ${result.data.HeadFullName || '-'}</div>
+                <div><strong>ตำแหน่ง:</strong> ${result.data.Position || '-'}</div>
+                <div><strong>หน่วยงาน:</strong> ${result.data.Organization || '-'}</div>
+                <div><strong>อีเมล:</strong> ${result.data.HeadShowEmail || '-'}</div>
+                <div><strong>รหัสคำขอ:</strong> ${result.data.RequestKey || '-'}</div>
               `;
             }
           } else {
