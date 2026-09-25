@@ -90,24 +90,26 @@ const Approval = {
 
         try {
           const result = await this.checkStatus({ ExternalRefID });
-          if (result && !result.error) {
+          if (result && result.status === 'success' && result.data) {
+            const d = result.data;
             const resultCard = document.getElementById('statusResult');
             if (resultCard) {
               resultCard.style.display = 'block';
               
               let statusBadge = '';
-              const statusUpper = (result.Status || '').toUpperCase();
+              const statusUpper = (d.Status || '').toUpperCase();
               if (statusUpper === 'PENDING') statusBadge = `<span style="color:orange;font-weight:bold;">รอดำเนินการ (PENDING)</span>`;
               else if (statusUpper === 'APPROVE') statusBadge = `<span style="color:green;font-weight:bold;">อนุมัติแล้ว (APPROVE)</span>`;
               else if (statusUpper === 'REJECT') statusBadge = `<span style="color:red;font-weight:bold;">ปฏิเสธ (REJECT)</span>`;
-              else statusBadge = `<span>${result.Status || '-'}</span>`;
+              else statusBadge = `<span>${d.Status || '-'}</span>`;
 
               resultCard.innerHTML = `
                 <div><strong>สถานะ:</strong> ${statusBadge}</div>
-                <div><strong>ขั้นตอน:</strong> ${result.ApproveStep || '-'}</div>
-                <div><strong>ผู้อนุมัติ (AD):</strong> ${result.Approver_ADUser || '-'}</div>
-                <div><strong>เวลาสร้าง:</strong> ${result.CreateDate || '-'}</div>
-                <div><strong>เวลาตอบกลับ:</strong> ${result.ActionDate || '-'}</div>
+                <div><strong>ขั้นตอน:</strong> ${d.ApproveStep || '-'}</div>
+                <div><strong>ผู้อนุมัติ (AD):</strong> ${d.Approver_ADUser || '-'}</div>
+                <div><strong>หัวข้อ:</strong> ${d.Title || '-'}</div>
+                <div><strong>เวลาสร้าง:</strong> ${d.created_at || '-'}</div>
+                <div><strong>เวลาตอบกลับ:</strong> ${d.updated_at || '-'}</div>
               `;
             }
             window.App?.showToast('ตรวจสอบสถานะสำเร็จ', 'success');
