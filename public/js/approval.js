@@ -28,15 +28,15 @@ const Approval = {
   },
 
   init() {
-    const submitForm = document.getElementById('approval-submit-form');
+    const submitForm = document.getElementById('approvalForm');
     if (submitForm) {
       submitForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const ExternalRefID = document.getElementById('submit-external-ref')?.value;
-        const ApproveType = document.getElementById('submit-approve-type')?.value;
-        const MsgSubject = document.getElementById('submit-msg-subject')?.value;
-        const MsgForHead = document.getElementById('submit-msg-head')?.value;
+        const ExternalRefID = document.getElementById('extRefId')?.value;
+        const ApproveType = document.querySelector('input[name="approveType"]:checked')?.value;
+        const MsgSubject = document.getElementById('apprSubject')?.value;
+        const MsgForHead = document.getElementById('msgForHead')?.value;
 
         if (!ExternalRefID) {
           window.App?.showToast('กรุณาระบุหมายเลขอ้างอิง', 'warning');
@@ -50,10 +50,11 @@ const Approval = {
           const result = await this.submitRequest({ ExternalRefID, ApproveType, MsgSubject, MsgForHead });
           if (result && !result.error) {
             window.App?.showToast('ส่งคำขออนุมัติสำเร็จ', 'success');
-            const resultCard = document.getElementById('approval-submit-result');
-            if (resultCard) {
+            const resultCard = document.getElementById('approvalResult');
+            const resultContent = document.getElementById('approvalResultContent');
+            if (resultCard && resultContent) {
               resultCard.style.display = 'block';
-              resultCard.innerHTML = `
+              resultContent.innerHTML = `
                 <div><strong>ผู้อนุมัติ:</strong> ${result.ApproverName || '-'}</div>
                 <div><strong>ตำแหน่ง:</strong> ${result.ApproverPosition || '-'}</div>
                 <div><strong>หน่วยงาน:</strong> ${result.ApproverOrg || '-'}</div>
@@ -71,12 +72,12 @@ const Approval = {
       });
     }
 
-    const statusForm = document.getElementById('approval-status-form');
+    const statusForm = document.getElementById('checkStatusForm');
     if (statusForm) {
       statusForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const ExternalRefID = document.getElementById('status-external-ref')?.value;
+        const ExternalRefID = document.getElementById('checkExtRefId')?.value;
         if (!ExternalRefID) {
           window.App?.showToast('กรุณาระบุหมายเลขอ้างอิง', 'warning');
           return;
@@ -88,16 +89,13 @@ const Approval = {
         try {
           const result = await this.checkStatus({ ExternalRefID });
           if (result && !result.error) {
-            const resultCard = document.getElementById('approval-status-result');
+            const resultCard = document.getElementById('statusResult');
             if (resultCard) {
               resultCard.style.display = 'block';
               
               let statusBadge = '';
               const statusUpper = (result.Status || '').toUpperCase();
-              if (statusUpper === 'PENDING') statusBadge = `<span style="color:orange;font-weight:bold;">รอดำเนินการ (PENDING)</span>`;
-              else if (statusUpper === 'APPROVE') statusBadge = `<span style="color:green;font-weight:bold;">อนุมัติแล้ว (APPROVE)</span>`;
-              else if (statusUpper === 'REJECT') statusBadge = `<span style="color:red;font-weight:bold;">ปฏิเสธ (REJECT)</span>`;
-              else statusBadge = `<span>${result.Status || '-'}</span>`;
+              if (statusUpper === `<span>${result.Status || '-'}</span>`;
 
               resultCard.innerHTML = `
                 <div><strong>สถานะ:</strong> ${statusBadge}</div>
