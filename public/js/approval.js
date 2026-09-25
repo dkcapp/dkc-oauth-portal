@@ -95,7 +95,10 @@ const Approval = {
               
               let statusBadge = '';
               const statusUpper = (result.Status || '').toUpperCase();
-              if (statusUpper === `<span>${result.Status || '-'}</span>`;
+              if (statusUpper === 'PENDING') statusBadge = `<span style="color:orange;font-weight:bold;">รอดำเนินการ (PENDING)</span>`;
+              else if (statusUpper === 'APPROVE') statusBadge = `<span style="color:green;font-weight:bold;">อนุมัติแล้ว (APPROVE)</span>`;
+              else if (statusUpper === 'REJECT') statusBadge = `<span style="color:red;font-weight:bold;">ปฏิเสธ (REJECT)</span>`;
+              else statusBadge = `<span>${result.Status || '-'}</span>`;
 
               resultCard.innerHTML = `
                 <div><strong>สถานะ:</strong> ${statusBadge}</div>
