@@ -14,6 +14,7 @@ const App = {
     window.Approval?.init();
     this.initMobileMenu();
     this.showSection(this.currentSection);
+    this.applyIncomingQuery();
   },
   
   showSection(sectionName) {
@@ -31,6 +32,26 @@ const App = {
         item.classList.remove('active');
       }
     });
+  },
+
+  applyIncomingQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const section = params.get('section');
+    if (!section) return;
+
+    // สลับ section จริงตามโครงสร้างใน dashboard.html (class="content-section", id ตรงชื่อ section)
+    document.querySelectorAll('.content-section').forEach(sec => {
+      sec.style.display = (sec.id === section) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.section === section);
+    });
+
+    if (section === 'approval') {
+      const subject = params.get('subject') || '';
+      const message = params.get('message') || '';
+      window.Approval?.prefillFromQuery({ subject, message });
+    }
   },
   
   populateUserInfo(user) {

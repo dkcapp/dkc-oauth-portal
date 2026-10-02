@@ -27,6 +27,22 @@ const Approval = {
     }
   },
 
+  prefillFromQuery({ subject, message }) {
+    const extRefId = document.getElementById('extRefId');
+    const apprSubject = document.getElementById('apprSubject');
+    const msgForHead = document.getElementById('msgForHead');
+
+    if (extRefId && !extRefId.value) {
+      extRefId.value = `JF-${Date.now()}`;
+    }
+    if (apprSubject && subject) {
+      apprSubject.value = subject;
+    }
+    if (msgForHead && message) {
+      msgForHead.value = message;
+    }
+  },
+
   init() {
     const submitForm = document.getElementById('approvalForm');
     if (submitForm) {
