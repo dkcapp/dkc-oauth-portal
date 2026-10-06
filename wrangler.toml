@@ -9,12 +9,11 @@ OAUTH_REDIRECT_URI = "https://dkc-oauth-portal.dkcapp.workers.dev/auth/callback"
 APP_URL = "https://dkc-oauth-portal.dkcapp.workers.dev"
 MSG_APP_NAME = "DKC_PORTAL"
 
-# Secrets (set via `wrangler secret put`):
-# OAUTH_CLIENT_SECRET
-# SESSION_SECRET
-
-[site]
-bucket = "../public"
+# Secrets (ตั้งผ่าน `npx wrangler secret put <ชื่อ>`):
+#   OAUTH_CLIENT_SECRET
+#   SESSION_SECRET
+# ตัวแปรเสริม (ไม่ตั้งก็ได้):
+#   CAS_REQUEST_URL, CAS_REQ_STATUS_URL
 
 [dev]
 port = 8787

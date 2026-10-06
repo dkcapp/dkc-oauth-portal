@@ -1,6 +1,4 @@
-﻿node_modules/
-.dev.vars
+node_modules/
 .wrangler/
-dist/
+.dev.vars
 .env
-*.log
