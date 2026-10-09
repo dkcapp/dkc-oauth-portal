@@ -1,581 +1,1478 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DKC Portal - ระบบจัดการองค์กร</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ===================== CSS ===================== */
-:root {
-    --primary: #1e3a5f;
-    --primary-light: #2c548a;
-    --secondary: #4a90d9;
-    --success: #27ae60;
-    --error: #e74c3c;
-    --warning: #f39c12;
-    --bg: #f8f9fa;
-    --white: #ffffff;
-    --text-main: #333333;
-    --text-muted: #666666;
-    --border: #e0e0e0;
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-    --sidebar-width: 260px;
-    --nav-height: 64px;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-[hidden] { display: none !important; }
-body { font-family: 'Prompt', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DKC Portal - ระบบจัดการองค์กร</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===================== CSS ===================== */
+      :root {
+        --primary: #1e3a5f;
+        --primary-light: #2c548a;
+        --secondary: #4a90d9;
+        --success: #27ae60;
+        --error: #e74c3c;
+        --warning: #f39c12;
+        --bg: #f8f9fa;
+        --white: #ffffff;
+        --text-main: #333333;
+        --text-muted: #666666;
+        --border: #e0e0e0;
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --sidebar-width: 260px;
+        --nav-height: 64px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font-family: "Prompt", sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        line-height: 1.6;
+      }
 
-/* Utilities */
-.mt-4 { margin-top: 1.5rem; }
-.mb-4 { margin-bottom: 1.5rem; }
-.mb-0 { margin-bottom: 0; }
-.text-danger { color: var(--error); }
-.text-muted { color: var(--text-muted); }
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-h1, h2, h3, h4, h5, h6 { font-weight: 500; margin-bottom: 0.5rem; }
+      /* Utilities */
+      .mt-4 {
+        margin-top: 1.5rem;
+      }
+      .mb-4 {
+        margin-bottom: 1.5rem;
+      }
+      .mb-0 {
+        margin-bottom: 0;
+      }
+      .text-danger {
+        color: var(--error);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
 
-/* Buttons */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 6px; border: none; font-family: 'Prompt', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
-.btn-primary { background-color: var(--primary); color: var(--white); }
-.btn-primary:hover { background-color: var(--primary-light); }
-.btn-secondary { background-color: var(--secondary); color: var(--white); }
-.btn-secondary:hover { filter: brightness(0.9); }
-.btn-block { display: flex; width: 100%; }
-.btn-large { padding: 0.75rem 1.5rem; font-size: 1.1rem; }
-.btn-icon { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-main); transition: color 0.2s; }
-.btn-icon:hover { color: var(--primary); }
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        border: none;
+        font-family: "Prompt", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--white);
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-light);
+      }
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: var(--white);
+      }
+      .btn-secondary:hover {
+        filter: brightness(0.9);
+      }
+      .btn-sm {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.85rem;
+      }
+      .btn-block {
+        display: flex;
+        width: 100%;
+      }
+      .btn-large {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+      }
+      .btn-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-main);
+        transition: color 0.2s;
+      }
+      .btn-icon:hover {
+        color: var(--primary);
+      }
 
-/* Forms */
-.form-group { margin-bottom: 1rem; }
-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-main); }
-.form-control { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; font-family: 'Prompt', sans-serif; font-size: 0.95rem; transition: border-color 0.2s; }
-.form-control:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(74,144,217,0.1); }
-.checkbox-group, .radio-group { display: flex; flex-wrap: wrap; gap: 1rem; }
-.radio-group.vertical { flex-direction: column; gap: 0.5rem; }
-.checkbox-label, .radio-label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 400; }
-.flex-form { display: flex; gap: 1rem; align-items: flex-end; }
-.flex-grow { flex: 1; }
+      /* Forms */
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      .form-control {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: "Prompt", sans-serif;
+        font-size: 0.95rem;
+        transition: border-color 0.2s;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.1);
+      }
+      .checkbox-group,
+      .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .radio-group.vertical {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .checkbox-label,
+      .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: 400;
+      }
+      .flex-form {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+      }
+      .flex-grow {
+        flex: 1;
+      }
 
-/* Cards */
-.card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.05); overflow: hidden; }
-.card-body { padding: 1.5rem; }
-.card-title { margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-.badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
-.badge-warning { background-color: rgba(243,156,18,0.1); color: var(--warning); }
-.badge-success { background-color: rgba(39,174,96,0.1); color: var(--success); }
-.badge-error { background-color: rgba(231,76,60,0.1); color: var(--error); }
-.separator { border: 0; height: 1px; background: var(--border); margin: 2rem 0; }
+      /* Cards */
+      .card {
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+      .card-body {
+        padding: 1.5rem;
+      }
+      .card-title {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .card-head h3 {
+        margin-bottom: 0;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .badge-warning {
+        background-color: rgba(243, 156, 18, 0.1);
+        color: var(--warning);
+      }
+      .badge-success {
+        background-color: rgba(39, 174, 96, 0.1);
+        color: var(--success);
+      }
+      .badge-error {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--error);
+      }
+      .separator {
+        border: 0;
+        height: 1px;
+        background: var(--border);
+        margin: 2rem 0;
+      }
 
-/* Login */
-.login-page { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-.login-container { width: 100%; max-width: 400px; }
-.login-card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; }
-.login-header { text-align: center; padding: 2.5rem 2rem 1.5rem; }
-.login-header .logo { color: var(--primary); margin-bottom: 1rem; }
-.login-header h1 { font-size: 1.5rem; color: var(--primary); }
-.login-header p { color: var(--text-muted); }
-.login-body { padding: 0 2rem 2rem; }
-.login-footer { background: var(--bg); padding: 1rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+      /* Prefill hint + history table */
+      .hint {
+        background: rgba(74, 144, 217, 0.08);
+        border: 1px solid rgba(74, 144, 217, 0.3);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+      .hint p {
+        margin: 0;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table.data {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      table.data th,
+      table.data td {
+        padding: 0.6rem 0.75rem;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+      table.data th {
+        color: var(--text-muted);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      table.data td small {
+        display: block;
+        color: var(--text-muted);
+      }
 
-/* Dashboard */
-.navbar { height: var(--nav-height); background: var(--white); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
-.navbar-left { display: flex; align-items: center; gap: 1rem; }
-.nav-logo { color: var(--primary); }
-.nav-title { font-size: 1.25rem; font-weight: 600; color: var(--primary); }
-.navbar-right { display: flex; align-items: center; gap: 1.5rem; }
-.user-profile { display: flex; align-items: center; gap: 0.75rem; }
-.avatar { color: var(--secondary); background: var(--bg); border-radius: 50%; padding: 0.25rem; }
-.layout-container { display: flex; min-height: 100vh; padding-top: var(--nav-height); }
-.sidebar { width: var(--sidebar-width); background: var(--white); border-right: 1px solid var(--border); position: fixed; top: var(--nav-height); bottom: 0; left: 0; overflow-y: auto; transition: transform 0.3s ease; z-index: 90; }
-.nav-menu { list-style: none; padding: 1rem 0; }
-.nav-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.5rem; color: var(--text-main); text-decoration: none; font-weight: 500; transition: all 0.2s; }
-.nav-item:hover { background: var(--bg); color: var(--primary); }
-.nav-item.active { background: rgba(30,58,95,0.05); color: var(--primary); border-right: 3px solid var(--primary); }
-.main-content { flex: 1; margin-left: var(--sidebar-width); padding: 2rem; }
-.section-title { margin-bottom: 1.5rem; color: var(--primary); }
-.offices-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+      /* Login */
+      .login-page {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .login-container {
+        width: 100%;
+        max-width: 400px;
+      }
+      .login-card {
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+      }
+      .login-header {
+        text-align: center;
+        padding: 2.5rem 2rem 1.5rem;
+      }
+      .login-header .logo {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+      .login-header h1 {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+      .login-header p {
+        color: var(--text-muted);
+      }
+      .login-body {
+        padding: 0 2rem 2rem;
+      }
+      .login-footer {
+        background: var(--bg);
+        padding: 1rem;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+      }
 
-/* Mobile */
-.mobile-only { display: none; }
-@media (max-width: 768px) {
-    .mobile-only { display: flex; }
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.active { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 1rem; }
-    #navDisplayName { display: none; }
-    .flex-form { flex-direction: column; align-items: stretch; }
-}
-</style>
-</head>
-<body>
+      /* Dashboard */
+      .navbar {
+        height: var(--nav-height);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.5rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+      }
+      .navbar-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .nav-logo {
+        color: var(--primary);
+      }
+      .nav-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary);
+      }
+      .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .avatar {
+        color: var(--secondary);
+        background: var(--bg);
+        border-radius: 50%;
+        padding: 0.25rem;
+      }
+      .layout-container {
+        display: flex;
+        min-height: 100vh;
+        padding-top: var(--nav-height);
+      }
+      .sidebar {
+        width: var(--sidebar-width);
+        background: var(--white);
+        border-right: 1px solid var(--border);
+        position: fixed;
+        top: var(--nav-height);
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+        z-index: 90;
+      }
+      .nav-menu {
+        list-style: none;
+        padding: 1rem 0;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .nav-item:hover {
+        background: var(--bg);
+        color: var(--primary);
+      }
+      .nav-item.active {
+        background: rgba(30, 58, 95, 0.05);
+        color: var(--primary);
+        border-right: 3px solid var(--primary);
+      }
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: 2rem;
+        min-width: 0;
+      }
+      .section-title {
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+      }
+      .offices-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
 
-<!-- ===================== หน้า Loading ===================== -->
-<div id="loadingView" class="login-page">
-    <p style="color:#fff">กำลังโหลด...</p>
-</div>
-
-<!-- ===================== หน้า Login ===================== -->
-<div id="loginView" class="login-page" hidden>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <svg class="logo" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
-                <h1>DKC OAuth Portal</h1>
-                <p>ระบบจัดการองค์กร</p>
-            </div>
-            <div class="login-body">
-                <button id="loginBtn" class="btn btn-primary btn-block btn-large">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                    เข้าสู่ระบบด้วยบัญชีองค์กร
-                </button>
-            </div>
-            <div class="login-footer">พัฒนาโดย กองบริการสารสนเทศ</div>
-        </div>
+      /* Mobile */
+      .mobile-only {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .mobile-only {
+          display: flex;
+        }
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.active {
+          transform: translateX(0);
+        }
+        .main-content {
+          margin-left: 0;
+          padding: 1rem;
+        }
+        #navDisplayName {
+          display: none;
+        }
+        .flex-form {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===================== หน้า Loading ===================== -->
+    <div id="loadingView" class="login-page">
+      <p style="color: #fff">กำลังโหลด...</p>
     </div>
-</div>
 
-<!-- ===================== หน้า Dashboard ===================== -->
-<div id="dashboardView" hidden>
-    <nav class="navbar">
-        <div class="navbar-left">
-            <button id="sidebarToggle" class="btn-icon mobile-only">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    <!-- ===================== หน้า Login ===================== -->
+    <div id="loginView" class="login-page" hidden>
+      <div class="login-container">
+        <div class="login-card">
+          <div class="login-header">
+            <svg
+              class="logo"
+              viewBox="0 0 24 24"
+              width="64"
+              height="64"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+            <h1>DKC OAuth Portal</h1>
+            <p>ระบบจัดการองค์กร</p>
+          </div>
+          <div class="login-body">
+            <button id="loginBtn" class="btn btn-primary btn-block btn-large">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              เข้าสู่ระบบด้วยบัญชีองค์กร
             </button>
-            <svg class="nav-logo" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
-            <span class="nav-title">DKC Portal</span>
+          </div>
+          <div class="login-footer">พัฒนาโดย กองบริการสารสนเทศ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== หน้า Dashboard ===================== -->
+    <div id="dashboardView" hidden>
+      <nav class="navbar">
+        <div class="navbar-left">
+          <button id="sidebarToggle" class="btn-icon mobile-only">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <svg
+            class="nav-logo"
+            viewBox="0 0 24 24"
+            width="32"
+            height="32"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+          <span class="nav-title">DKC Portal</span>
         </div>
         <div class="navbar-right">
-            <div class="user-profile">
-                <span id="navDisplayName">กำลังโหลด...</span>
-                <svg class="avatar" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            </div>
-            <button id="logoutBtn" class="btn-icon text-danger" title="ออกจากระบบ">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            </button>
+          <div class="user-profile">
+            <span id="navDisplayName">กำลังโหลด...</span>
+            <svg
+              class="avatar"
+              viewBox="0 0 24 24"
+              width="32"
+              height="32"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <button
+            id="logoutBtn"
+            class="btn-icon text-danger"
+            title="ออกจากระบบ"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
         </div>
-    </nav>
+      </nav>
 
-    <div class="layout-container">
+      <div class="layout-container">
         <aside class="sidebar" id="sidebar">
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-item active" data-section="profile">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    หน้าหลัก</a></li>
-                <li><a href="#" class="nav-item" data-section="message">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    ส่งข้อความ</a></li>
-                <li><a href="#" class="nav-item" data-section="approval">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>
-                    ขออนุมัติ</a></li>
-            </ul>
+          <ul class="nav-menu">
+            <li>
+              <a href="#" class="nav-item active" data-section="profile">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                  ></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                หน้าหลัก</a
+              >
+            </li>
+            <li>
+              <a href="#" class="nav-item" data-section="message">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  ></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                ส่งข้อความ</a
+              >
+            </li>
+            <li>
+              <a href="#" class="nav-item" data-section="approval">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                  ></path>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                  <path d="M9 14l2 2 4-4"></path>
+                </svg>
+                ขออนุมัติ</a
+              >
+            </li>
+          </ul>
         </aside>
 
         <main class="main-content">
-            <!-- ข้อมูลส่วนตัว -->
-            <section id="profile" class="content-section">
-                <h2 class="section-title">ข้อมูลส่วนตัว</h2>
-                <div class="card profile-card">
-                    <div class="card-body">
-                        <div class="profile-header">
-                            <div class="profile-info">
-                                <h3 id="profileName">กำลังโหลด...</h3>
-                                <p class="text-muted" id="profileUsername">-</p>
-                                <p class="text-muted" id="profileEmail">-</p>
-                            </div>
-                        </div>
-                        <h4 class="mt-4">ข้อมูลหน่วยงาน</h4>
-                        <div id="officesContainer" class="offices-grid"></div>
-                    </div>
+          <!-- ข้อมูลส่วนตัว -->
+          <section id="profile" class="content-section">
+            <h2 class="section-title">ข้อมูลส่วนตัว</h2>
+            <div class="card profile-card">
+              <div class="card-body">
+                <div class="profile-header">
+                  <div class="profile-info">
+                    <h3 id="profileName">กำลังโหลด...</h3>
+                    <p class="text-muted" id="profileUsername">-</p>
+                    <p class="text-muted" id="profileEmail">-</p>
+                  </div>
                 </div>
-            </section>
+                <h4 class="mt-4">ข้อมูลหน่วยงาน</h4>
+                <div id="officesContainer" class="offices-grid"></div>
+              </div>
+            </div>
+          </section>
 
-            <!-- ส่งข้อความ -->
-            <section id="message" class="content-section" hidden>
-                <h2 class="section-title">ส่งข้อความ</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="messageForm">
-                            <div class="form-group">
-                                <label>ช่องทางการส่ง</label>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-label"><input type="checkbox" name="channels" value="email">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                        Email</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="channels" value="line">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                        LINE</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="channels" value="hr_mobile">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-                                        HR Mobile</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>ประเภทผู้รับ</label>
-                                <div class="radio-group">
-                                    <label class="radio-label"><input type="radio" name="recipientType" value="toAd" checked> AD Username</label>
-                                    <label class="radio-label"><input type="radio" name="recipientType" value="to"> Email</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="recipients">ผู้รับ (คั่นด้วยเครื่องหมายจุลภาค ,)</label>
-                                <input type="text" id="recipients" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="msgSubject">หัวข้อ</label>
-                                <input type="text" id="msgSubject" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="msgText">ข้อความ</label>
-                                <textarea id="msgText" class="form-control" rows="4" required></textarea>
-                            </div>
-                            <div class="form-group" id="emailBodyGroup" hidden>
-                                <label for="emailBody">ข้อความอีเมล (HTML)</label>
-                                <textarea id="emailBody" class="form-control" rows="6"></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                                ส่งข้อความ
-                            </button>
-                        </form>
+          <!-- ส่งข้อความ -->
+          <section id="message" class="content-section" hidden>
+            <h2 class="section-title">ส่งข้อความ</h2>
+            <div class="card">
+              <div class="card-body">
+                <form id="messageForm">
+                  <div class="form-group">
+                    <label>ช่องทางการส่ง</label>
+                    <div class="checkbox-group">
+                      <label class="checkbox-label"
+                        ><input type="checkbox" name="channels" value="email" />
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                          ></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Email</label
+                      >
+                      <label class="checkbox-label"
+                        ><input type="checkbox" name="channels" value="line" />
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                          ></path>
+                        </svg>
+                        LINE</label
+                      >
+                      <label class="checkbox-label"
+                        ><input
+                          type="checkbox"
+                          name="channels"
+                          value="hr_mobile"
+                        />
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <rect
+                            x="5"
+                            y="2"
+                            width="14"
+                            height="20"
+                            rx="2"
+                            ry="2"
+                          ></rect>
+                          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        HR Mobile</label
+                      >
                     </div>
-                </div>
+                  </div>
 
-                <div id="messageResult" class="card mt-4" hidden>
-                    <div class="card-body">
-                        <h3>ผลการส่งข้อความ</h3>
-                        <div id="messageResultContent"></div>
+                  <div class="form-group">
+                    <label>ประเภทผู้รับ</label>
+                    <div class="radio-group">
+                      <label class="radio-label"
+                        ><input
+                          type="radio"
+                          name="recipientType"
+                          value="toAd"
+                          checked
+                        />
+                        AD Username</label
+                      >
+                      <label class="radio-label"
+                        ><input type="radio" name="recipientType" value="to" />
+                        Email</label
+                      >
                     </div>
-                </div>
-            </section>
+                  </div>
 
-            <!-- ขออนุมัติ -->
-            <section id="approval" class="content-section" hidden>
-                <h2 class="section-title">ระบบขออนุมัติ</h2>
+                  <div class="form-group">
+                    <label for="recipients"
+                      >ผู้รับ (คั่นด้วยเครื่องหมายจุลภาค ,)</label
+                    >
+                    <input
+                      type="text"
+                      id="recipients"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="msgSubject">หัวข้อ</label>
+                    <input
+                      type="text"
+                      id="msgSubject"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="msgText">ข้อความ</label>
+                    <textarea
+                      id="msgText"
+                      class="form-control"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="form-group" id="emailBodyGroup" hidden>
+                    <label for="emailBody">ข้อความอีเมล (HTML)</label>
+                    <textarea
+                      id="emailBody"
+                      class="form-control"
+                      rows="6"
+                    ></textarea>
+                  </div>
 
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="card-title">ส่งคำขออนุมัติ</h3>
-                        <form id="approvalForm">
-                            <div class="form-group">
-                                <label for="extRefId">รหัสอ้างอิง (ExternalRefID)</label>
-                                <input type="text" id="extRefId" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>ประเภทการอนุมัติ</label>
-                                <div class="radio-group vertical">
-                                    <label class="radio-label"><input type="radio" name="approveType" value="1" checked> 1 - หัวหน้ากองเท่านั้น</label>
-                                    <label class="radio-label"><input type="radio" name="approveType" value="2"> 2 - หัวหน้ากอง + หัวหน้าสำนัก</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="apprSubject">หัวข้อ</label>
-                                <input type="text" id="apprSubject" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="msgForHead">ข้อความถึงหัวหน้า</label>
-                                <textarea id="msgForHead" class="form-control" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">ส่งคำขอ</button>
-                        </form>
+                  <button type="submit" class="btn btn-primary">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    ส่งข้อความ
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div id="messageResult" class="card mt-4" hidden>
+              <div class="card-body">
+                <h3>ผลการส่งข้อความ</h3>
+                <div id="messageResultContent"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ขออนุมัติ -->
+          <section id="approval" class="content-section" hidden>
+            <h2 class="section-title">ระบบขออนุมัติ</h2>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <h3 class="card-title">ส่งคำขออนุมัติ</h3>
+
+                <div id="prefillInfo" class="hint" hidden></div>
+
+                <form id="approvalForm">
+                  <div class="form-group">
+                    <label for="extRefId">รหัสอ้างอิง (ExternalRefID)</label>
+                    <input
+                      type="text"
+                      id="extRefId"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>ประเภทการอนุมัติ</label>
+                    <div class="radio-group vertical">
+                      <label class="radio-label"
+                        ><input
+                          type="radio"
+                          name="approveType"
+                          value="1"
+                          checked
+                        />
+                        1 - หัวหน้ากองเท่านั้น</label
+                      >
+                      <label class="radio-label"
+                        ><input type="radio" name="approveType" value="2" /> 2 -
+                        หัวหน้ากอง + หัวหน้าสำนัก</label
+                      >
                     </div>
-                </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="apprSubject">หัวข้อ</label>
+                    <input
+                      type="text"
+                      id="apprSubject"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="msgForHead">ข้อความถึงหัวหน้า</label>
+                    <textarea
+                      id="msgForHead"
+                      class="form-control"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">ส่งคำขอ</button>
+                </form>
+              </div>
+            </div>
 
-                <div id="approvalResult" class="card mb-4" hidden>
-                    <div class="card-body">
-                        <h3>ผลการส่งคำขอ</h3>
-                        <div id="approvalResultContent"></div>
-                    </div>
-                </div>
+            <div id="approvalResult" class="card mb-4" hidden>
+              <div class="card-body">
+                <h3>ผลการส่งคำขอ</h3>
+                <div id="approvalResultContent"></div>
+              </div>
+            </div>
 
-                <hr class="separator">
+            <hr class="separator" />
 
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">ตรวจสอบสถานะการอนุมัติ</h3>
-                        <form id="checkStatusForm" class="flex-form">
-                            <div class="form-group mb-0 flex-grow">
-                                <label for="checkExtRefId" class="sr-only">รหัสอ้างอิง</label>
-                                <input type="text" id="checkExtRefId" class="form-control" placeholder="ระบุรหัสอ้างอิง..." required>
-                            </div>
-                            <button type="submit" class="btn btn-secondary">ตรวจสอบ</button>
-                        </form>
-                        <div id="statusResult" class="mt-4" hidden></div>
-                    </div>
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="card-head">
+                  <h3>ประวัติคำขอของฉัน</h3>
+                  <button
+                    type="button"
+                    id="refreshHistoryBtn"
+                    class="btn btn-secondary btn-sm"
+                  >
+                    รีเฟรช
+                  </button>
                 </div>
-            </section>
+                <div class="table-wrap">
+                  <table class="data">
+                    <thead>
+                      <tr>
+                        <th>รหัสอ้างอิง</th>
+                        <th>หัวข้อ</th>
+                        <th>สถานะ</th>
+                        <th>ส่งเมื่อ</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                      <tr>
+                        <td colspan="5" class="text-muted">กำลังโหลด...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">ตรวจสอบสถานะการอนุมัติ</h3>
+                <form id="checkStatusForm" class="flex-form">
+                  <div class="form-group mb-0 flex-grow">
+                    <label for="checkExtRefId" class="sr-only"
+                      >รหัสอ้างอิง</label
+                    >
+                    <input
+                      type="text"
+                      id="checkExtRefId"
+                      class="form-control"
+                      placeholder="ระบุรหัสอ้างอิง..."
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-secondary">
+                    ตรวจสอบ
+                  </button>
+                </form>
+                <div id="statusResult" class="mt-4" hidden></div>
+              </div>
+            </div>
+          </section>
         </main>
+      </div>
     </div>
-</div>
 
-<script>
-/* ===================== JavaScript ===================== */
-const $ = (id) => document.getElementById(id);
+    <script>
+      /* ===================== JavaScript ===================== */
+      const $ = (id) => document.getElementById(id);
 
-// escape ข้อความก่อนใส่ลง innerHTML (กัน XSS)
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
-  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-));
-const lines = (x) => (Array.isArray(x) ? x : [x]).filter(Boolean).map(esc).join('<br>');
+      // escape ข้อความก่อนใส่ลง innerHTML (กัน XSS)
+      const esc = (v) =>
+        String(v ?? "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      const lines = (x) =>
+        (Array.isArray(x) ? x : [x]).filter(Boolean).map(esc).join("<br>");
 
-const ICON_CLOSE = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-const ICON_PENDING = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
+      const ICON_CLOSE =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      const ICON_PENDING =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
 
-/* ---------- Toast / Loading ---------- */
-function showToast(message, type = 'success') {
-  let box = $('toast-container');
-  if (!box) {
-    box = document.createElement('div');
-    box.id = 'toast-container';
-    box.style.cssText = 'position:fixed;top:20px;right:20px;z-index:9999';
-    document.body.appendChild(box);
-  }
-  const colors = { success: '#4caf50', error: '#f44336', warning: '#ff9800', info: '#2196f3' };
-  const toast = document.createElement('div');
-  toast.style.cssText = 'padding:12px 16px;margin-bottom:10px;border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:space-between;min-width:250px;box-shadow:0 2px 5px rgba(0,0,0,0.2);background-color:' + (colors[type] || colors.success);
-  const text = document.createElement('span');
-  text.textContent = message;
-  const close = document.createElement('button');
-  close.innerHTML = ICON_CLOSE;
-  close.style.cssText = 'background:none;border:none;color:#fff;cursor:pointer;margin-left:16px';
-  close.onclick = () => toast.remove();
-  toast.append(text, close);
-  box.appendChild(toast);
-  setTimeout(() => toast.remove(), 5000);
-}
+      let currentUser = null;
+      // ข้อมูลผู้สมัครจากฟอร์ม JotForm (ถ้ามี) ส่งไปเก็บคู่กับคำขอ
+      let prefill = {
+        sid: "",
+        applicant_name: "",
+        course: "",
+        member_type: "",
+      };
 
-function setLoading(btn, loading) {
-  if (!btn) return;
-  if (loading) {
-    btn.disabled = true;
-    btn.dataset.originalText = btn.innerHTML;
-    btn.innerHTML = ICON_PENDING + ' กำลังดำเนินการ...';
-  } else {
-    btn.disabled = false;
-    btn.innerHTML = btn.dataset.originalText || 'ตกลง';
-  }
-}
+      /* ---------- Toast / Loading ---------- */
+      function showToast(message, type = "success") {
+        let box = $("toast-container");
+        if (!box) {
+          box = document.createElement("div");
+          box.id = "toast-container";
+          box.style.cssText = "position:fixed;top:20px;right:20px;z-index:9999";
+          document.body.appendChild(box);
+        }
+        const colors = {
+          success: "#4caf50",
+          error: "#f44336",
+          warning: "#ff9800",
+          info: "#2196f3",
+        };
+        const toast = document.createElement("div");
+        toast.style.cssText =
+          "padding:12px 16px;margin-bottom:10px;border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:space-between;min-width:250px;box-shadow:0 2px 5px rgba(0,0,0,0.2);background-color:" +
+          (colors[type] || colors.success);
+        const text = document.createElement("span");
+        text.textContent = message;
+        const close = document.createElement("button");
+        close.innerHTML = ICON_CLOSE;
+        close.style.cssText =
+          "background:none;border:none;color:#fff;cursor:pointer;margin-left:16px";
+        close.onclick = () => toast.remove();
+        toast.append(text, close);
+        box.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+      }
 
-async function postJson(url, body) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (res.status === 401) { location.href = '/'; return null; }
-  try { return await res.json(); } catch (e) { return null; }
-}
+      function setLoading(btn, loading) {
+        if (!btn) return;
+        if (loading) {
+          btn.disabled = true;
+          btn.dataset.originalText = btn.innerHTML;
+          btn.innerHTML = ICON_PENDING + " กำลังดำเนินการ...";
+        } else {
+          btn.disabled = false;
+          btn.innerHTML = btn.dataset.originalText || "ตกลง";
+        }
+      }
 
-/* ---------- Navigation ---------- */
-function showSection(name) {
-  document.querySelectorAll('.content-section').forEach((s) => { s.hidden = s.id !== name; });
-  document.querySelectorAll('.nav-item').forEach((n) => {
-    n.classList.toggle('active', n.dataset.section === name);
-  });
-}
+      async function postJson(url, body) {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (res.status === 401) {
+          location.href = "/";
+          return null;
+        }
+        try {
+          return await res.json();
+        } catch (e) {
+          return null;
+        }
+      }
 
-function initNavigation() {
-  document.querySelectorAll('.nav-item').forEach((item) => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      showSection(item.dataset.section);
-      $('sidebar').classList.remove('active');
-    });
-  });
-  $('sidebarToggle').addEventListener('click', () => $('sidebar').classList.toggle('active'));
-  $('logoutBtn').addEventListener('click', () => { location.href = '/auth/logout'; });
-}
+      const errText = (r, fallback) =>
+        r && (r.error || r.message) ? String(r.error || r.message) : fallback;
 
-/* ---------- Profile ---------- */
-function fillUser(user) {
-  const name = user.display_name || user.name;
-  $('navDisplayName').textContent = name || 'ผู้ใช้งาน';
-  $('profileName').textContent = name || '-';
-  $('profileUsername').textContent = user.username ? 'Username: ' + user.username : '-';
-  $('profileEmail').textContent = user.email || '-';
-  if (Array.isArray(user.offices)) {
-    $('officesContainer').innerHTML = user.offices.map((o) => `
+      /* ---------- Navigation ---------- */
+      function showSection(name) {
+        document.querySelectorAll(".content-section").forEach((s) => {
+          s.hidden = s.id !== name;
+        });
+        document.querySelectorAll(".nav-item").forEach((n) => {
+          n.classList.toggle("active", n.dataset.section === name);
+        });
+      }
+
+      function initNavigation() {
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.addEventListener("click", (e) => {
+            e.preventDefault();
+            showSection(item.dataset.section);
+            $("sidebar").classList.remove("active");
+          });
+        });
+        $("sidebarToggle").addEventListener("click", () =>
+          $("sidebar").classList.toggle("active"),
+        );
+        $("logoutBtn").addEventListener("click", () => {
+          location.href = "/auth/logout";
+        });
+      }
+
+      /* ---------- Profile ---------- */
+      function fillUser(user) {
+        const name = user.display_name || user.name;
+        $("navDisplayName").textContent = name || "ผู้ใช้งาน";
+        $("profileName").textContent = name || "-";
+        $("profileUsername").textContent = user.username
+          ? "Username: " + user.username
+          : "-";
+        $("profileEmail").textContent = user.email || "-";
+        if (Array.isArray(user.offices)) {
+          $("officesContainer").innerHTML = user.offices
+            .map(
+              (o) => `
       <div class="office-card">
-        <p><strong>ตำแหน่ง:</strong> ${esc(o.position) || '-'}</p>
-        <p><strong>กอง:</strong> ${esc(o.kong) || '-'}</p>
-        <p><strong>ฝ่าย:</strong> ${esc(o.section) || '-'}</p>
-        <p><strong>สำนัก:</strong> ${esc(o.samnak) || '-'}</p>
-      </div>`).join('');
-  }
-}
-
-/* ---------- ส่งข้อความ ---------- */
-function initMessage() {
-  const form = $('messageForm');
-  const emailBox = document.querySelector('input[name="channels"][value="email"]');
-  emailBox.addEventListener('change', () => { $('emailBodyGroup').hidden = !emailBox.checked; });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const channels = Array.from(document.querySelectorAll('input[name="channels"]:checked')).map((c) => c.value);
-    const type = document.querySelector('input[name="recipientType"]:checked')?.value || 'toAd';
-    const recipients = $('recipients').value.split(',').map((s) => s.trim()).filter(Boolean);
-    const subject = $('msgSubject').value;
-    const message = $('msgText').value;
-    const email_body = $('emailBody').value;
-
-    if (!subject) return showToast('กรุณาระบุหัวข้อ', 'warning');
-    if (channels.length === 0) return showToast('กรุณาเลือกช่องทางการส่งอย่างน้อยหนึ่งช่องทาง', 'warning');
-    if ((channels.includes('email') || channels.includes('hr_mobile')) && !email_body && !message) {
-      return showToast('กรุณาระบุเนื้อหาอีเมลหรือข้อความ', 'warning');
-    }
-    if (recipients.length === 0) return showToast('กรุณาระบุผู้รับอย่างน้อยหนึ่งคน', 'warning');
-
-    const to = type === 'to' ? recipients : [];
-    const toAd = type === 'toAd' ? recipients : [];
-    if ((channels.includes('line') || channels.includes('hr_mobile')) && toAd.length === 0) {
-      return showToast('LINE และ HR Mobile ต้องระบุผู้รับเป็น AD Username', 'warning');
-    }
-
-    const btn = form.querySelector('button[type="submit"]');
-    setLoading(btn, true);
-    try {
-      const r = await postJson('/api/send-message', { channel: channels, to, toAd, subject, message, email_body });
-      if (r && (r.status === 'success' || r.status === 'partial')) {
-        showToast(r.status === 'success' ? 'ส่งข้อความสำเร็จ' : 'ส่งข้อความสำเร็จบางส่วน', r.status === 'success' ? 'success' : 'warning');
-        $('messageResult').hidden = false;
-        $('messageResultContent').innerHTML = `
-          <div><strong>Tracking ID:</strong> ${esc(r.tracking_id) || '-'}</div>
-          ${r.message ? `<div class="mt-4">${lines(r.message)}</div>` : ''}
-          ${r.errors && r.errors.length ? `<div class="mt-4 text-danger">${lines(r.errors)}</div>` : ''}`;
-      } else {
-        showToast('ส่งข้อความล้มเหลว', 'error');
+        <p><strong>ตำแหน่ง:</strong> ${esc(o.position) || "-"}</p>
+        <p><strong>กอง:</strong> ${esc(o.kong) || "-"}</p>
+        <p><strong>ฝ่าย:</strong> ${esc(o.section) || "-"}</p>
+        <p><strong>สำนัก:</strong> ${esc(o.samnak) || "-"}</p>
+      </div>`,
+            )
+            .join("");
+        }
       }
-    } catch (err) {
-      showToast('เกิดข้อผิดพลาดในการส่งข้อความ', 'error');
-    } finally {
-      setLoading(btn, false);
-    }
-  });
-}
 
-/* ---------- ขออนุมัติ ---------- */
-const isOk = (r) => r && (r.success === true || r.status === 'success') && r.data;
+      /* ---------- ส่งข้อความ ---------- */
+      function initMessage() {
+        const form = $("messageForm");
+        const emailBox = document.querySelector(
+          'input[name="channels"][value="email"]',
+        );
+        emailBox.addEventListener("change", () => {
+          $("emailBodyGroup").hidden = !emailBox.checked;
+        });
 
-function initApproval() {
-  const form = $('approvalForm');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const ExternalRefID = $('extRefId').value;
-    const ApproveType = document.querySelector('input[name="approveType"]:checked')?.value;
-    const MsgSubject = $('apprSubject').value;
-    const MsgForHead = $('msgForHead').value;
-    if (!ExternalRefID) return showToast('กรุณาระบุหมายเลขอ้างอิง', 'warning');
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const channels = Array.from(
+            document.querySelectorAll('input[name="channels"]:checked'),
+          ).map((c) => c.value);
+          const type =
+            document.querySelector('input[name="recipientType"]:checked')
+              ?.value || "toAd";
+          const recipients = $("recipients")
+            .value.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+          const subject = $("msgSubject").value;
+          const message = $("msgText").value;
+          const email_body = $("emailBody").value;
 
-    const btn = form.querySelector('button[type="submit"]');
-    setLoading(btn, true);
-    try {
-      const r = await postJson('/api/cas/request', { ExternalRefID, ApproveType, MsgSubject, MsgForHead });
-      if (isOk(r)) {
-        showToast('ส่งคำขออนุมัติสำเร็จ', 'success');
-        const d = r.data;
-        $('approvalResult').hidden = false;
-        $('approvalResultContent').innerHTML = `
-          <div><strong>ผู้อนุมัติ (AD):</strong> ${esc(d.ADApprover) || '-'}</div>
-          <div><strong>ชื่อผู้อนุมัติ:</strong> ${esc(d.HeadFullName) || '-'}</div>
-          <div><strong>ตำแหน่ง:</strong> ${esc(d.Position) || '-'}</div>
-          <div><strong>หน่วยงาน:</strong> ${esc(d.Organization) || '-'}</div>
-          <div><strong>อีเมล:</strong> ${esc(d.HeadShowEmail) || '-'}</div>
-          <div><strong>รหัสคำขอ:</strong> ${esc(d.RequestKey) || '-'}</div>`;
-      } else {
-        showToast('ส่งคำขออนุมัติล้มเหลว', 'error');
+          if (!subject) return showToast("กรุณาระบุหัวข้อ", "warning");
+          if (channels.length === 0)
+            return showToast(
+              "กรุณาเลือกช่องทางการส่งอย่างน้อยหนึ่งช่องทาง",
+              "warning",
+            );
+          if (
+            (channels.includes("email") || channels.includes("hr_mobile")) &&
+            !email_body &&
+            !message
+          ) {
+            return showToast("กรุณาระบุเนื้อหาอีเมลหรือข้อความ", "warning");
+          }
+          if (recipients.length === 0)
+            return showToast("กรุณาระบุผู้รับอย่างน้อยหนึ่งคน", "warning");
+
+          const to = type === "to" ? recipients : [];
+          const toAd = type === "toAd" ? recipients : [];
+          if (
+            (channels.includes("line") || channels.includes("hr_mobile")) &&
+            toAd.length === 0
+          ) {
+            return showToast(
+              "LINE และ HR Mobile ต้องระบุผู้รับเป็น AD Username",
+              "warning",
+            );
+          }
+
+          const btn = form.querySelector('button[type="submit"]');
+          setLoading(btn, true);
+          try {
+            const r = await postJson("/api/send-message", {
+              channel: channels,
+              to,
+              toAd,
+              subject,
+              message,
+              email_body,
+            });
+            if (r && (r.status === "success" || r.status === "partial")) {
+              showToast(
+                r.status === "success"
+                  ? "ส่งข้อความสำเร็จ"
+                  : "ส่งข้อความสำเร็จบางส่วน",
+                r.status === "success" ? "success" : "warning",
+              );
+              $("messageResult").hidden = false;
+              $("messageResultContent").innerHTML = `
+          <div><strong>Tracking ID:</strong> ${esc(r.tracking_id) || "-"}</div>
+          ${r.message ? `<div class="mt-4">${lines(r.message)}</div>` : ""}
+          ${r.errors && r.errors.length ? `<div class="mt-4 text-danger">${lines(r.errors)}</div>` : ""}`;
+            } else {
+              showToast("ส่งข้อความล้มเหลว", "error");
+            }
+          } catch (err) {
+            showToast("เกิดข้อผิดพลาดในการส่งข้อความ", "error");
+          } finally {
+            setLoading(btn, false);
+          }
+        });
       }
-    } catch (err) {
-      showToast('เกิดข้อผิดพลาดในการส่งคำขอ', 'error');
-    } finally {
-      setLoading(btn, false);
-    }
-  });
 
-  const statusForm = $('checkStatusForm');
-  statusForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const ExternalRefID = $('checkExtRefId').value;
-    if (!ExternalRefID) return showToast('กรุณาระบุหมายเลขอ้างอิง', 'warning');
+      /* ---------- ขออนุมัติ ---------- */
+      const isOk = (r) =>
+        r && (r.success === true || r.status === "success") && r.data;
 
-    const btn = statusForm.querySelector('button[type="submit"]');
-    setLoading(btn, true);
-    try {
-      const r = await postJson('/api/cas/status', { ExternalRefID });
-      if (isOk(r)) {
-        const d = r.data;
-        const s = String(d.Status || '').toUpperCase();
-        let badge;
-        if (s === 'PENDING') badge = '<span style="color:orange;font-weight:bold;">รอดำเนินการ (PENDING)</span>';
-        else if (s.startsWith('APPROVE')) badge = `<span style="color:green;font-weight:bold;">อนุมัติแล้ว (${esc(s)})</span>`;
-        else if (s.startsWith('REJECT')) badge = `<span style="color:red;font-weight:bold;">ปฏิเสธ (${esc(s)})</span>`;
-        else badge = `<span>${esc(d.Status) || '-'}</span>`;
-
-        $('statusResult').hidden = false;
-        $('statusResult').innerHTML = `
-          <div><strong>สถานะ:</strong> ${badge}</div>
-          <div><strong>ขั้นตอน:</strong> ${esc(d.ApproveStep) || '-'}</div>
-          <div><strong>ผู้อนุมัติ (AD):</strong> ${esc(d.Approver_ADUser) || '-'}</div>
-          <div><strong>หัวข้อ:</strong> ${esc(d.Title) || '-'}</div>
-          <div><strong>เวลาสร้าง:</strong> ${esc(d.created_at) || '-'}</div>
-          <div><strong>เวลาตอบกลับ:</strong> ${esc(d.updated_at) || '-'}</div>`;
-        showToast('ตรวจสอบสถานะสำเร็จ', 'success');
-      } else {
-        showToast('ตรวจสอบสถานะล้มเหลว', 'error');
+      // เวลาใน D1 เป็น UTC → แสดงเป็นเวลาไทย
+      function fmtTime(s) {
+        if (!s) return "-";
+        const d = new Date(String(s).replace(" ", "T") + "Z");
+        if (isNaN(d)) return String(s);
+        return d.toLocaleString("th-TH", {
+          timeZone: "Asia/Bangkok",
+          dateStyle: "short",
+          timeStyle: "short",
+        });
       }
-    } catch (err) {
-      showToast('เกิดข้อผิดพลาดในการตรวจสอบสถานะ', 'error');
-    } finally {
-      setLoading(btn, false);
-    }
-  });
-}
 
-// เปิดจากลิงก์ภายนอก เช่น /?section=approval&subject=...&message=...
-function applyIncomingQuery() {
-  const p = new URLSearchParams(location.search);
-  const section = p.get('section');
-  if (!section || !$(section) || !$(section).classList.contains('content-section')) return;
-  showSection(section);
-  if (section === 'approval') {
-    if (!$('extRefId').value) $('extRefId').value = 'JF-' + Date.now();
-    if (p.get('subject')) $('apprSubject').value = p.get('subject');
-    if (p.get('message')) $('msgForHead').value = p.get('message');
-  }
-}
+      function statusKind(s) {
+        const u = String(s || "").toUpperCase();
+        if (u.startsWith("APPROVE")) return "approved";
+        if (u.startsWith("REJECT")) return "rejected";
+        return "pending";
+      }
 
-/* ---------- เริ่มทำงาน ---------- */
-async function init() {
-  $('loginBtn').addEventListener('click', () => { location.href = '/auth/login'; });
+      function statusBadge(s) {
+        const k = statusKind(s);
+        const label = {
+          approved: "อนุมัติแล้ว",
+          rejected: "ปฏิเสธ",
+          pending: "รอดำเนินการ",
+        }[k];
+        const cls = {
+          approved: "badge-success",
+          rejected: "badge-error",
+          pending: "badge-warning",
+        }[k];
+        return `<span class="badge ${cls}">${label}</span>`;
+      }
 
-  let user = null;
-  try {
-    const res = await fetch('/auth/me');
-    if (res.ok) user = await res.json();
-  } catch (e) {
-    console.error('Session check failed:', e);
-  }
+      function showStatusResult(d) {
+        $("statusResult").hidden = false;
+        $("statusResult").innerHTML = `
+    <div><strong>สถานะ:</strong> ${statusBadge(d.Status)} <small class="text-muted">${esc(d.Status)}</small></div>
+    <div><strong>ขั้นตอน:</strong> ${esc(d.ApproveStep) || "-"}</div>
+    <div><strong>ผู้อนุมัติ (AD):</strong> ${esc(d.Approver_ADUser) || "-"}</div>
+    <div><strong>หัวข้อ:</strong> ${esc(d.Title) || "-"}</div>
+    <div><strong>เวลาสร้าง:</strong> ${esc(d.created_at) || "-"}</div>
+    <div><strong>เวลาตอบกลับ:</strong> ${esc(d.updated_at) || "-"}</div>`;
+      }
 
-  $('loadingView').hidden = true;
-  if (!user) { $('loginView').hidden = false; return; }
+      // ตรวจสถานะ (ฝั่ง server จะอัปเดตลง D1 ให้ด้วย) แล้วโหลดประวัติใหม่
+      async function checkStatus(ref, btn) {
+        setLoading(btn, true);
+        try {
+          const r = await postJson("/api/cas/status", { ExternalRefID: ref });
+          if (isOk(r)) {
+            showStatusResult(r.data);
+            showToast("ตรวจสอบสถานะสำเร็จ", "success");
+            loadHistory();
+          } else {
+            showToast(errText(r, "ตรวจสอบสถานะล้มเหลว"), "error");
+          }
+        } catch (err) {
+          showToast("เกิดข้อผิดพลาดในการตรวจสอบสถานะ", "error");
+        } finally {
+          setLoading(btn, false);
+        }
+      }
 
-  $('dashboardView').hidden = false;
-  fillUser(user);
-  initNavigation();
-  initMessage();
-  initApproval();
-  applyIncomingQuery();
-}
+      async function loadHistory() {
+        const body = $("historyBody");
+        try {
+          const res = await fetch("/api/cas/history");
+          if (res.status === 401) {
+            location.href = "/";
+            return;
+          }
+          const r = await res.json();
+          const items = r.items || [];
+          if (items.length === 0) {
+            body.innerHTML =
+              '<tr><td colspan="5" class="text-muted">ยังไม่มีประวัติคำขอ</td></tr>';
+            return;
+          }
+          body.innerHTML = items
+            .map(
+              (it) => `
+      <tr>
+        <td>${esc(it.external_ref_id)}</td>
+        <td>${esc(it.subject)}
+          ${it.applicant_name || it.course ? `<small>${esc([it.applicant_name, it.course].filter(Boolean).join(" · "))}</small>` : ""}</td>
+        <td>${statusBadge(it.status)}
+          ${it.approver_name ? `<small>${esc(it.approver_name)}</small>` : ""}</td>
+        <td>${esc(fmtTime(it.created_at))}</td>
+        <td><button type="button" class="btn btn-secondary btn-sm" data-ref="${esc(it.external_ref_id)}">เช็คสถานะ</button></td>
+      </tr>`,
+            )
+            .join("");
+        } catch (e) {
+          body.innerHTML =
+            '<tr><td colspan="5" class="text-danger">โหลดประวัติไม่สำเร็จ ลองกดรีเฟรชอีกครั้ง</td></tr>';
+        }
+      }
 
-document.addEventListener('DOMContentLoaded', init);
-</script>
-</body>
+      function initApproval() {
+        const form = $("approvalForm");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const ExternalRefID = $("extRefId").value.trim();
+          const ApproveType = document.querySelector(
+            'input[name="approveType"]:checked',
+          )?.value;
+          const MsgSubject = $("apprSubject").value;
+          const MsgForHead = $("msgForHead").value;
+          if (!ExternalRefID)
+            return showToast("กรุณาระบุหมายเลขอ้างอิง", "warning");
+
+          const btn = form.querySelector('button[type="submit"]');
+          setLoading(btn, true);
+          try {
+            const r = await postJson("/api/cas/request", {
+              ExternalRefID,
+              ApproveType,
+              MsgSubject,
+              MsgForHead,
+              applicant_name: prefill.applicant_name,
+              course: prefill.course,
+              member_type: prefill.member_type,
+              jotform_sid: prefill.sid,
+            });
+            if (isOk(r)) {
+              showToast(
+                r.duplicate
+                  ? "คำขอนี้เคยส่งไปแล้ว แสดงข้อมูลเดิม"
+                  : "ส่งคำขออนุมัติสำเร็จ",
+                r.duplicate ? "info" : "success",
+              );
+              const d = r.data;
+              $("approvalResult").hidden = false;
+              $("approvalResultContent").innerHTML = `
+          <div><strong>ผู้อนุมัติ (AD):</strong> ${esc(d.ADApprover) || "-"}</div>
+          <div><strong>ชื่อผู้อนุมัติ:</strong> ${esc(d.HeadFullName) || "-"}</div>
+          <div><strong>ตำแหน่ง:</strong> ${esc(d.Position) || "-"}</div>
+          <div><strong>หน่วยงาน:</strong> ${esc(d.Organization) || "-"}</div>
+          <div><strong>อีเมล:</strong> ${esc(d.HeadShowEmail) || "-"}</div>
+          <div><strong>รหัสคำขอ:</strong> ${esc(d.RequestKey) || "-"}</div>`;
+              loadHistory();
+            } else {
+              showToast(errText(r, "ส่งคำขออนุมัติล้มเหลว"), "error");
+            }
+          } catch (err) {
+            showToast("เกิดข้อผิดพลาดในการส่งคำขอ", "error");
+          } finally {
+            setLoading(btn, false);
+          }
+        });
+
+        const statusForm = $("checkStatusForm");
+        statusForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const ExternalRefID = $("checkExtRefId").value.trim();
+          if (!ExternalRefID)
+            return showToast("กรุณาระบุหมายเลขอ้างอิง", "warning");
+          checkStatus(
+            ExternalRefID,
+            statusForm.querySelector('button[type="submit"]'),
+          );
+        });
+
+        $("refreshHistoryBtn").addEventListener("click", loadHistory);
+        $("historyBody").addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-ref]");
+          if (!btn) return;
+          $("checkExtRefId").value = btn.dataset.ref;
+          checkStatus(btn.dataset.ref, btn);
+        });
+        loadHistory();
+      }
+
+      // เปิดจากลิงก์ภายนอก (JotForm) เช่น /?section=approval&sid=1234567890
+      // หรือส่งข้อมูลมาตรง ๆ: /?section=approval&name=...&course=...&type=...
+      async function applyIncomingQuery() {
+        const p = new URLSearchParams(location.search);
+        const section = p.get("section");
+        if (
+          !section ||
+          !$(section) ||
+          !$(section).classList.contains("content-section")
+        )
+          return;
+        showSection(section);
+        if (section !== "approval") return;
+
+        const info = {
+          sid: (p.get("sid") || "").trim(),
+          applicant_name: "",
+          course: "",
+          member_type: "",
+        };
+        if (info.sid) {
+          try {
+            const res = await fetch(
+              "/api/prefill?sid=" + encodeURIComponent(info.sid),
+            );
+            if (res.ok) Object.assign(info, await res.json());
+          } catch (e) {
+            /* ใช้ค่าจาก URL แทน */
+          }
+        }
+        info.applicant_name =
+          info.applicant_name || (p.get("name") || "").trim();
+        info.course = info.course || (p.get("course") || "").trim();
+        info.member_type = info.member_type || (p.get("type") || "").trim();
+        prefill = info;
+
+        if (!$("extRefId").value)
+          $("extRefId").value = info.sid || "JF-" + Date.now();
+
+        const defSubject = info.applicant_name
+          ? "ขออนุมัติเข้าอบรม: " +
+            info.applicant_name +
+            (info.course ? " (" + info.course + ")" : "")
+          : "";
+        const defMessage = info.applicant_name
+          ? [
+              "ขออนุมัติให้ " + info.applicant_name + " เข้าอบรม",
+              info.course ? "หลักสูตร " + info.course : "",
+              info.member_type ? "ประเภทสมาชิก: " + info.member_type : "",
+            ]
+              .filter(Boolean)
+              .join(" · ")
+          : "";
+        const subject = p.get("subject") || defSubject;
+        const message = p.get("message") || defMessage;
+        if (subject) $("apprSubject").value = subject;
+        if (message) $("msgForHead").value = message;
+
+        if (info.applicant_name || info.course) {
+          const me = currentUser
+            ? currentUser.display_name || currentUser.name || ""
+            : "";
+          const un =
+            currentUser && currentUser.username
+              ? " (" + currentUser.username + ")"
+              : "";
+          $("prefillInfo").hidden = false;
+          $("prefillInfo").innerHTML = `
+      <p><strong>ข้อมูลจากฟอร์มสมัคร:</strong> ${esc(info.applicant_name) || "-"}${info.course ? " · " + esc(info.course) : ""}</p>
+      <p><strong>ผู้ส่งคำขอ (บัญชีที่ล็อกอิน):</strong> ${esc(me)}${esc(un)}</p>
+      <p class="text-muted">ตรวจสอบข้อมูลด้านล่าง แล้วกด "ส่งคำขอ" ได้เลย</p>`;
+        }
+      }
+
+      /* ---------- เริ่มทำงาน ---------- */
+      async function init() {
+        $("loginBtn").addEventListener("click", () => {
+          location.href = "/auth/login";
+        });
+
+        let user = null;
+        try {
+          const res = await fetch("/auth/me");
+          if (res.ok) user = await res.json();
+        } catch (e) {
+          console.error("Session check failed:", e);
+        }
+
+        if (!user) {
+          // มาจากลิงก์ JotForm (มี section) → พาไปล็อกอินเลย แล้วกลับมาหน้าเดิมพร้อมข้อมูลครบ
+          if (new URLSearchParams(location.search).get("section")) {
+            location.replace(
+              "/auth/login?next=" + encodeURIComponent("/" + location.search),
+            );
+            return;
+          }
+          $("loadingView").hidden = true;
+          $("loginView").hidden = false;
+          return;
+        }
+
+        currentUser = user;
+        $("loadingView").hidden = true;
+        $("dashboardView").hidden = false;
+        fillUser(user);
+        initNavigation();
+        initMessage();
+        initApproval();
+        applyIncomingQuery();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
 </html>

@@ -8,10 +8,21 @@ OAUTH_CLIENT_ID = "34"
 OAUTH_REDIRECT_URI = "https://dkc-oauth-portal.dkcapp.workers.dev/auth/callback"
 APP_URL = "https://dkc-oauth-portal.dkcapp.workers.dev"
 MSG_APP_NAME = "DKC_PORTAL"
+JOTFORM_FORM_ID = "231301336713444"
+# ถ้าบัญชี JotForm เป็น EU ให้ใช้ "https://eu-api.jotform.com"
+JOTFORM_API_BASE = "https://api.jotform.com"
+
+# D1 (ประวัติคำขออนุมัติ) — แทนที่ database_id ด้วยค่าที่ได้จากตอนสร้าง D1
+[[d1_databases]]
+binding = "DB"
+database_name = "dkc-portal-db"
+database_id = "30c87e29-2699-4eac-a579-143e4b244cfc"
 
 # Secrets (ตั้งผ่าน `npx wrangler secret put <ชื่อ>`):
 #   OAUTH_CLIENT_SECRET
 #   SESSION_SECRET
+#   JOTFORM_API_KEY   (สิทธิ์อ่านอย่างเดียว)
+#   ADMIN_API_KEY     (สุ่มยาว 32+ ตัวอักษร ใช้ร่วมกับเว็บใบประกาศ)
 # ตัวแปรเสริม (ไม่ตั้งก็ได้):
 #   CAS_REQUEST_URL, CAS_REQ_STATUS_URL
 
