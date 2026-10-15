@@ -17,7 +17,7 @@ JOTFORM_API_BASE = "https://api.jotform.com"
 [[d1_databases]]
 binding = "DB"
 database_name = "dkc-portal-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "30c87e29-2699-4eac-a579-143e4b244cfc"
 
 # Secrets (ตั้งผ่าน `npx wrangler secret put <ชื่อ>`):
 #   OAUTH_CLIENT_SECRET
