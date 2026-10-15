@@ -7,6 +7,7 @@ OAUTH_BASE_URI = "https://oauth.dhammakaya.network"
 OAUTH_CLIENT_ID = "34"
 OAUTH_REDIRECT_URI = "https://dkc-oauth-portal.dkcapp.workers.dev/auth/callback"
 APP_URL = "https://dkc-oauth-portal.dkcapp.workers.dev"
+THANKYOU_URL = "https://comtrain-webcertificate.onrender.com/thankyou.html"
 MSG_APP_NAME = "DKC_PORTAL"
 JOTFORM_FORM_ID = "231301336713444"
 # ถ้าบัญชี JotForm เป็น EU ให้ใช้ "https://eu-api.jotform.com"
@@ -16,7 +17,7 @@ JOTFORM_API_BASE = "https://api.jotform.com"
 [[d1_databases]]
 binding = "DB"
 database_name = "dkc-portal-db"
-database_id = "30c87e29-2699-4eac-a579-143e4b244cfc"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
 
 # Secrets (ตั้งผ่าน `npx wrangler secret put <ชื่อ>`):
 #   OAUTH_CLIENT_SECRET
